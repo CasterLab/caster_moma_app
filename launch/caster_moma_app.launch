@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="log_type" default="screen"/>
+
+  <!-- Aruco detect -->
+  <node pkg="aruco_ros" type="marker_publisher" name="aruco_marker_publisher">
+    <param name="image_is_rectified" value="True"/>
+    <param name="marker_size"        value="0.063"/>
+    <param name="reference_frame"    value="camera_color_optical_frame"/>
+    <param name="camera_frame"       value="camera_color_optical_frame"/>
+    <remap from="/camera_info" to="/color/camera_info" />
+    <remap from="/image" to="/color/image_raw" />
+  </node>
+
+  <!-- marker detect -->
+  <node pkg="caster_moma_app" type="marker_detect_node" name="marker_detect_node" output="$(arg log_type)" />
+
+  <!-- Caster man app -->
+  <node pkg="caster_moma_app" type="caster_moma_app_node" name="caster_moma_app_node" output="$(arg log_type)">
+    <rosparam file="$(find caster_moma_app)/config/caster_moma_app.yaml" command="load" />
+  </node>
+</launch>
