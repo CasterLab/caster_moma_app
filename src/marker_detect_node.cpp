@@ -12,46 +12,70 @@
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
+#include <moveit/planning_scene_interface/planning_scene_interface.h>
+
 bool receive_data = false;
 
-geometry_msgs::TransformStamped transformStamped1, transformStamped2, transformStamped3;
+geometry_msgs::TransformStamped marker_transform, object_transform;
+moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
 
 void MarkerPoseCallback(const aruco_msgs::MarkerArray::ConstPtr& msg) {
   static tf2_ros::TransformBroadcaster br;
-  // geometry_msgs::TransformStamped transformStamped1, transformStamped2;
   
-  transformStamped1.header.stamp = ros::Time::now();
-  transformStamped1.header.frame_id = "camera_color_optical_frame";
-  transformStamped1.child_frame_id = "marker";
-  transformStamped1.transform.translation.x = msg->markers[0].pose.pose.position.x;
-  transformStamped1.transform.translation.y = msg->markers[0].pose.pose.position.y;
-  transformStamped1.transform.translation.z = msg->markers[0].pose.pose.position.z;
+  marker_transform.header.stamp = ros::Time::now();
+  marker_transform.header.frame_id = "camera_color_optical_frame";
+  marker_transform.child_frame_id = "marker";
+  marker_transform.transform.translation.x = msg->markers[0].pose.pose.position.x;
+  marker_transform.transform.translation.y = msg->markers[0].pose.pose.position.y;
+  marker_transform.transform.translation.z = msg->markers[0].pose.pose.position.z;
   // tf2::Quaternion q;
   // q.setRPY(0, 0, msg->theta);
-  transformStamped1.transform.rotation.x = msg->markers[0].pose.pose.orientation.x;
-  transformStamped1.transform.rotation.y = msg->markers[0].pose.pose.orientation.y;
-  transformStamped1.transform.rotation.z = msg->markers[0].pose.pose.orientation.z;
-  transformStamped1.transform.rotation.w = msg->markers[0].pose.pose.orientation.w;
-  // br.sendTransform(transformStamped1);
+  marker_transform.transform.rotation.x = msg->markers[0].pose.pose.orientation.x;
+  marker_transform.transform.rotation.y = msg->markers[0].pose.pose.orientation.y;
+  marker_transform.transform.rotation.z = msg->markers[0].pose.pose.orientation.z;
+  marker_transform.transform.rotation.w = msg->markers[0].pose.pose.orientation.w;
+  // br.sendTransform(marker_transform);
 
-  transformStamped2.header.stamp = ros::Time::now();
-  transformStamped2.header.frame_id = "marker";
-  transformStamped2.child_frame_id = "object";
-  transformStamped2.transform.translation.x = 0.00;
-  transformStamped2.transform.translation.y = -0.036;
-  transformStamped2.transform.translation.z = 0.00;
+  object_transform.header.stamp = ros::Time::now();
+  object_transform.header.frame_id = "marker";
+  object_transform.child_frame_id = "object";
+  object_transform.transform.translation.x = 0.00;
+  object_transform.transform.translation.y = -0.036;
+  object_transform.transform.translation.z = 0.00;
 
   tf2::Quaternion q;
   q.setRPY(M_PI/2.0, M_PI/2.0, 0.0);
-  transformStamped2.transform.rotation.x = q.x();
-  transformStamped2.transform.rotation.y = q.y();
-  transformStamped2.transform.rotation.z = q.z();
-  transformStamped2.transform.rotation.w = q.w();
-  // br.sendTransform(transformStamped2);
+  object_transform.transform.rotation.x = q.x();
+  object_transform.transform.rotation.y = q.y();
+  object_transform.transform.rotation.z = q.z();
+  object_transform.transform.rotation.w = q.w();
 
   receive_data = true;
 
   // ROS_INFO("update Marker pose");
+}
+
+void publish_object() {
+  moveit_msgs::CollisionObject object;
+
+  object.id = "object";
+  object.header.frame_id = "object";
+
+  object.primitives.resize(1);
+  object.primitives[0].type = object.primitives[0].BOX;
+  object.primitives[0].dimensions.resize(3);
+  object.primitives[0].dimensions[0] = 0.07;
+  object.primitives[0].dimensions[1] = 0.07;
+  object.primitives[0].dimensions[2] = 0.1;
+
+  object.primitive_poses.resize(1);
+  object.primitive_poses[0].position.x = 0.00;
+  object.primitive_poses[0].position.y = 0.00;
+  object.primitive_poses[0].position.z = 0.00;
+  object.primitive_poses[0].orientation.w = 1.0;
+
+  object.operation = object.ADD;
+  planning_scene_interface.applyCollisionObject(object);
 }
 
 int main(int argc, char** argv) {
@@ -72,9 +96,11 @@ int main(int argc, char** argv) {
   ROS_INFO("Start object tf publish...");
   tf2_ros::TransformBroadcaster br;
   while(ros::ok()) {
-    br.sendTransform(transformStamped1);
-    br.sendTransform(transformStamped2);
+    br.sendTransform(marker_transform);
+    br.sendTransform(object_transform);
+    publish_object();
   }
+
   ROS_INFO("Stop object tf publish");
   ros::waitForShutdown();
   return 0;

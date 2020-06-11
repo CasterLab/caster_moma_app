@@ -149,10 +149,8 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_node src/caster_moma_app_node.cpp)
+add_executable(pick_place_demo src/pick_place_demo.cpp)
 add_executable(marker_detect_node src/marker_detect_node.cpp)
-add_executable(caster_disinfect_node src/caster_disinfect_node.cpp)
-add_executable(caster_disinfect_joy_node src/caster_disinfect_joy_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -162,27 +160,13 @@ add_executable(caster_disinfect_joy_node src/caster_disinfect_joy_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(pick_place_demo ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(marker_detect_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(caster_disinfect_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(caster_disinfect_joy_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(${PROJECT_NAME}_node
-  ${catkin_LIBRARIES}
-)
+target_link_libraries(pick_place_demo ${catkin_LIBRARIES})
+target_link_libraries(marker_detect_node ${catkin_LIBRARIES})
 
-target_link_libraries(marker_detect_node
-  ${catkin_LIBRARIES}
-)
-
-target_link_libraries(caster_disinfect_node
-  ${catkin_LIBRARIES}
-)
-
-target_link_libraries(caster_disinfect_joy_node
-  ${catkin_LIBRARIES}
-)
 #############
 ## Install ##
 #############
@@ -198,7 +182,7 @@ install(PROGRAMS
 )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS ${PROJECT_NAME}_node marker_detect_node caster_disinfect_node caster_disinfect_joy_node
+install(TARGETS pick_place_demo marker_detect_node
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
