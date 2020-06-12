@@ -5,18 +5,30 @@
   <!-- Aruco detect -->
   <node pkg="aruco_ros" type="marker_publisher" name="aruco_marker_publisher">
     <param name="image_is_rectified" value="True"/>
-    <param name="marker_size"        value="0.063"/>
-    <param name="reference_frame"    value="camera_color_optical_frame"/>
-    <param name="camera_frame"       value="camera_color_optical_frame"/>
-    <remap from="/camera_info" to="/color/camera_info" />
-    <remap from="/image" to="/color/image_raw" />
+    <param name="marker_size"        value="0.064"/>
+    <param name="reference_frame"    value="kinect2_ir_optical_frame"/>
+    <param name="camera_frame"       value="kinect2_ir_optical_frame"/>
+    <remap from="/camera_info" to="/kinect2/sd/camera_info" />
+    <remap from="/image" to="/kinect2/sd/image_ir_rect" />
   </node>
+
+<!--   <node pkg="aruco_ros" type="single" name="aruco_single">
+    <remap from="/camera_info" to="/kinect2/sd/camera_info" />
+    <remap from="/image" to="/kinect2/sd/image_color_rect" />
+    <param name="image_is_rectified" value="True"/>
+    <param name="marker_size"        value="0.064"/>
+    <param name="marker_id"          value="88"/>
+    <param name="reference_frame"    value="kinect2_ir_optical_frame"/>
+    <param name="camera_frame"       value="kinect2_ir_optical_frame"/>
+    <param name="marker_frame"       value="marker" />
+    <param name="corner_refinement"  value="LINES" />
+  </node> -->
 
   <!-- marker detect -->
   <node pkg="caster_moma_app" type="marker_detect_node" name="marker_detect_node" output="$(arg log_type)" />
 
   <!-- Caster man app -->
-  <node pkg="caster_moma_app" type="caster_moma_app_node" name="caster_moma_app_node" output="$(arg log_type)">
-    <rosparam file="$(find caster_moma_app)/config/caster_moma_app.yaml" command="load" />
-  </node>
+  <!-- <node pkg="caster_moma_app" type="caster_moma_app_node" name="caster_moma_app_node" output="$(arg log_type)"> -->
+    <!-- <rosparam file="$(find caster_moma_app)/config/caster_moma_app.yaml" command="load" /> -->
+  <!-- </node> -->
 </launch>

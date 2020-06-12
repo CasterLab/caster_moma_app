@@ -52,13 +52,13 @@ void pick(moveit::planning_interface::MoveGroupInterface& move_group) {
   // Make sure that when you set the grasp_pose, you are setting it to be the pose of the last link in
   // your manipulator which in this case would be `"panda_link8"` You will have to compensate for the
   // transform from `"panda_link8"` to the palm of the end effector.
-  grasps[0].grasp_pose.header.frame_id = "base_footprint";
+  grasps[0].grasp_pose.header.frame_id = "object";
   tf2::Quaternion orientation;
   orientation.setRPY(M_PI / 2, 0, M_PI / 2);
   grasps[0].grasp_pose.pose.orientation = tf2::toMsg(orientation);
-  grasps[0].grasp_pose.pose.position.x = 0.85;
-  grasps[0].grasp_pose.pose.position.y = 0.10;
-  grasps[0].grasp_pose.pose.position.z = 0.60;
+  grasps[0].grasp_pose.pose.position.x = 0.0;
+  grasps[0].grasp_pose.pose.position.y = 0.0;
+  grasps[0].grasp_pose.pose.position.z = 0.0;
 
   // Setting pre-grasp approach
   // ++++++++++++++++++++++++++
@@ -91,7 +91,7 @@ void pick(moveit::planning_interface::MoveGroupInterface& move_group) {
 
   // BEGIN_SUB_TUTORIAL pick3
   // Set support surface as table1.
-  move_group.setSupportSurfaceName("table");
+  // move_group.setSupportSurfaceName("table");
   // Call pick to pick up the object using the grasps given
   move_group.pick("object", grasps);
   // END_SUB_TUTORIAL
@@ -216,7 +216,7 @@ int main(int argc, char** argv) {
   moveit::planning_interface::MoveGroupInterface group("arm");
   group.setPlanningTime(45.0);
 
-  addCollisionObjects(planning_scene_interface);
+  // addCollisionObjects(planning_scene_interface);
 
   // Wait a bit for ROS things to initialize
   ros::WallDuration(1.0).sleep();
@@ -235,7 +235,7 @@ int main(int argc, char** argv) {
 
   ros::WallDuration(1.0).sleep();
 
-  place(group);
+  // place(group);
 
   ros::WallDuration(1.0).sleep();
 

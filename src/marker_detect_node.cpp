@@ -15,15 +15,13 @@
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
 
 bool receive_data = false;
-
 geometry_msgs::TransformStamped marker_transform, object_transform;
-moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
 
 void MarkerPoseCallback(const aruco_msgs::MarkerArray::ConstPtr& msg) {
   static tf2_ros::TransformBroadcaster br;
   
   marker_transform.header.stamp = ros::Time::now();
-  marker_transform.header.frame_id = "camera_color_optical_frame";
+  marker_transform.header.frame_id = "kinect2_ir_optical_frame";
   marker_transform.child_frame_id = "marker";
   marker_transform.transform.translation.x = msg->markers[0].pose.pose.position.x;
   marker_transform.transform.translation.y = msg->markers[0].pose.pose.position.y;
@@ -44,7 +42,7 @@ void MarkerPoseCallback(const aruco_msgs::MarkerArray::ConstPtr& msg) {
   object_transform.transform.translation.z = 0.00;
 
   tf2::Quaternion q;
-  q.setRPY(M_PI/2.0, M_PI/2.0, 0.0);
+  q.setRPY(-M_PI/2.0, 0.0, -M_PI/2.0);
   object_transform.transform.rotation.x = q.x();
   object_transform.transform.rotation.y = q.y();
   object_transform.transform.rotation.z = q.z();
@@ -55,7 +53,7 @@ void MarkerPoseCallback(const aruco_msgs::MarkerArray::ConstPtr& msg) {
   // ROS_INFO("update Marker pose");
 }
 
-void publish_object() {
+void publish_object(moveit::planning_interface::PlanningSceneInterface &planning_scene_interface) {
   moveit_msgs::CollisionObject object;
 
   object.id = "object";
@@ -88,6 +86,8 @@ int main(int argc, char** argv) {
 
   ros::Subscriber marker_pose_sub = nh.subscribe("aruco_marker_publisher/markers", 1000, MarkerPoseCallback);
 
+  moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
+
   ROS_INFO("Wait for first marker...");
   while(receive_data == false) {
     ros::WallDuration(1.0).sleep();
@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
   while(ros::ok()) {
     br.sendTransform(marker_transform);
     br.sendTransform(object_transform);
-    publish_object();
+    publish_object(planning_scene_interface);
   }
 
   ROS_INFO("Stop object tf publish");
