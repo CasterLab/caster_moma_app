@@ -1,0 +1,7 @@
+goals:
+  sk_3f:
+    goal_list: ['home', 'pick', 'place']
+
+    home: {frame_id: 'map', position: [40.7150111824, 14.0503073292, 0.0], orientation: [0.0, 0.0, 0.686784206731, 0.726861371504]}
+    pick: {frame_id: 'map', position: [44.129733974, 5.25948360461, 0.0], orientation: [0.0, 0.0, -0.0532056699849, 0.998583575211]}
+    place: {frame_id: 'map', position: [40.7150111824, 14.0503073292, 0.0], orientation: [0.0, 0.0, 0.686784206731, 0.726861371504]}

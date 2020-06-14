@@ -26,7 +26,4 @@
 
   <!-- marker detect -->
   <node pkg="caster_moma_app" type="marker_detect_node" name="marker_detect_node" output="$(arg log_type)" />
-
-  <!-- pick place demo -->
-  <!-- <node pkg="caster_moma_app" type="pick_place_demo_2.py" name="pick_place_demo_node" output="$(arg log_type)" /> -->
 </launch>
