@@ -3,7 +3,7 @@
   <arg name="log_type" default="screen"/>
 
   <!-- Aruco detect -->
-  <node pkg="aruco_ros" type="marker_publisher" name="aruco_marker_publisher">
+  <node pkg="aruco_ros" type="marker_publisher" name="object_marker_publisher">
     <param name="image_is_rectified" value="True"/>
     <param name="marker_size"        value="0.064"/>
     <param name="reference_frame"    value="kinect2_ir_optical_frame"/>
@@ -12,23 +12,21 @@
     <remap from="/image" to="/kinect2/sd/image_ir_rect" />
   </node>
 
-<!--   <node pkg="aruco_ros" type="single" name="aruco_single">
-    <remap from="/camera_info" to="/kinect2/sd/camera_info" />
-    <remap from="/image" to="/kinect2/sd/image_color_rect" />
+  <node pkg="aruco_ros" type="single" name="plane_marker_publisher">
+    <param name="marker_id"          value="99"/>
     <param name="image_is_rectified" value="True"/>
-    <param name="marker_size"        value="0.064"/>
-    <param name="marker_id"          value="88"/>
+    <param name="marker_size"        value="0.143"/>
     <param name="reference_frame"    value="kinect2_ir_optical_frame"/>
     <param name="camera_frame"       value="kinect2_ir_optical_frame"/>
-    <param name="marker_frame"       value="marker" />
+    <param name="marker_frame"       value="plane" />
     <param name="corner_refinement"  value="LINES" />
-  </node> -->
+    <remap from="/camera_info" to="/kinect2/sd/camera_info" />
+    <remap from="/image" to="/kinect2/sd/image_ir_rect" />
+  </node>
 
   <!-- marker detect -->
   <node pkg="caster_moma_app" type="marker_detect_node" name="marker_detect_node" output="$(arg log_type)" />
 
-  <!-- Caster man app -->
-  <!-- <node pkg="caster_moma_app" type="caster_moma_app_node" name="caster_moma_app_node" output="$(arg log_type)"> -->
-    <!-- <rosparam file="$(find caster_moma_app)/config/caster_moma_app.yaml" command="load" /> -->
-  <!-- </node> -->
+  <!-- pick place demo -->
+  <!-- <node pkg="caster_moma_app" type="pick_place_demo_2.py" name="pick_place_demo_node" output="$(arg log_type)" /> -->
 </launch>

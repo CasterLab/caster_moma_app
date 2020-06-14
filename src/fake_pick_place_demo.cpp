@@ -63,7 +63,7 @@ void pick(moveit::planning_interface::MoveGroupInterface& move_group) {
   // Setting pre-grasp approach
   // ++++++++++++++++++++++++++
   /* Defined with respect to frame_id */
-  grasps[0].pre_grasp_approach.direction.header.frame_id = "base_footprint";
+  grasps[0].pre_grasp_approach.direction.header.frame_id = "object";
   /* Direction is set as positive x axis */
   grasps[0].pre_grasp_approach.direction.vector.x = 1.0;
   grasps[0].pre_grasp_approach.min_distance = 0.01;
@@ -72,11 +72,11 @@ void pick(moveit::planning_interface::MoveGroupInterface& move_group) {
   // Setting post-grasp retreat
   // ++++++++++++++++++++++++++
   /* Defined with respect to frame_id */
-  grasps[0].post_grasp_retreat.direction.header.frame_id = "base_footprint";
+  grasps[0].post_grasp_retreat.direction.header.frame_id = "object";
   /* Direction is set as positive z axis */
-  grasps[0].post_grasp_retreat.direction.vector.z = 1.0;
+  grasps[0].post_grasp_retreat.direction.vector.x = -1.0;
   grasps[0].post_grasp_retreat.min_distance = 0.01;
-  grasps[0].post_grasp_retreat.desired_distance = 0.02;
+  grasps[0].post_grasp_retreat.desired_distance = 0.05;
 
   // Setting posture of eef before grasp
   // +++++++++++++++++++++++++++++++++++
@@ -206,7 +206,7 @@ void addCollisionObjects(moveit::planning_interface::PlanningSceneInterface& pla
 }
 
 int main(int argc, char** argv) {
-  ros::init(argc, argv, "pick_place_demo");
+  ros::init(argc, argv, "fake_pick_place_demo");
   ros::NodeHandle nh;
   ros::AsyncSpinner spinner(1);
   spinner.start();

@@ -149,7 +149,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(pick_place_demo src/pick_place_demo.cpp)
+add_executable(fake_pick_place_demo src/fake_pick_place_demo.cpp)
 add_executable(marker_detect_node src/marker_detect_node.cpp)
 
 ## Rename C++ executable without prefix
@@ -160,11 +160,11 @@ add_executable(marker_detect_node src/marker_detect_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(pick_place_demo ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(fake_pick_place_demo ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(marker_detect_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(pick_place_demo ${catkin_LIBRARIES})
+target_link_libraries(fake_pick_place_demo ${catkin_LIBRARIES})
 target_link_libraries(marker_detect_node ${catkin_LIBRARIES})
 
 #############
@@ -182,7 +182,7 @@ install(PROGRAMS
 )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS pick_place_demo marker_detect_node
+install(TARGETS fake_pick_place_demo marker_detect_node
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
