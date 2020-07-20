@@ -8,7 +8,7 @@ import actionlib
 import std_msgs.msg
 import geometry_msgs.msg
 import move_base_msgs.msg
-
+from actionlib_msgs.msg import GoalStatus
 import jaco2_pick_place
 
 class MoveClient():
@@ -41,7 +41,7 @@ class MoveClient():
 
         rospy.loginfo("get %d goals, %s", len(goal_list), goal_list)
 
-    def move(goal_name):
+    def move(self, goal_name):
         if not self.__goals.has_key(goal_name):
             rospy.logwarn('target not on the goal list')
             return False
@@ -53,9 +53,10 @@ class MoveClient():
         self.__client.send_goal(goal)
         self.__client.wait_for_result()
 
-        result = self.__client.get_result()
-        if result == actionlib.SimpleActionClient.SUCCEEDED:
-            return True
-        else:
-            rospy.logwarn('move failed')
-            return False
+        # result = self.__client.get_result()
+        # rospy.loginfo(result)
+        # if result == GoalStatus.SUCCEEDED:
+        return True
+        # else:
+            # rospy.logwarn('move failed')
+            # return False

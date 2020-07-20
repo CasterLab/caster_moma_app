@@ -1,7 +1,7 @@
 goals:
-  sk_3f:
+  dock_test:
     goal_list: ['home', 'pick', 'place']
 
-    home: {frame_id: 'map', position: [40.7150111824, 14.0503073292, 0.0], orientation: [0.0, 0.0, 0.686784206731, 0.726861371504]}
-    pick: {frame_id: 'map', position: [44.129733974, 5.25948360461, 0.0], orientation: [0.0, 0.0, -0.0532056699849, 0.998583575211]}
-    place: {frame_id: 'map', position: [40.7150111824, 14.0503073292, 0.0], orientation: [0.0, 0.0, 0.686784206731, 0.726861371504]}
+    home: {frame_id: 'map', position: [1.225, 0.608, 0.000], orientation: [0.001, -0.000, -0.750, 0.662]}
+    pick: {frame_id: 'map', position: [0.546, -0.132, -0.000], orientation: [0.000, -0.002, -0.739, 0.673]}
+    place: {frame_id: 'map', position: [1.812, -0.335, -0.000], orientation: [-0.003, -0.002, -0.739, 0.674]}

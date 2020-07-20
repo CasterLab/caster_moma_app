@@ -38,7 +38,7 @@ void ObjectMarkerPoseCallback(const aruco_msgs::MarkerArray::ConstPtr& msg) {
       object_transform.header.frame_id = "marker";
       object_transform.child_frame_id = "object";
 
-      object_transform.transform.translation.x = 0.00;
+      object_transform.transform.translation.x = 0.02;
       object_transform.transform.translation.y = -0.036;
       object_transform.transform.translation.z = 0.00;
 

@@ -2,7 +2,7 @@
 <launch>
   <arg name="log_type" default="screen"/>
 
-  <include file="$(find caster_moma_app)/launch/marker_detect.launch" />
+  <!-- <include file="$(find caster_moma_app)/launch/marker_detect.launch" /> -->
 
   <rosparam file="$(find caster_moma_app)/config/goals.yaml" command="load" />
   <node pkg="caster_moma_app" type="pick_place_demo_2.py" name="pick_place_demo_node" output="$(arg log_type)" />
