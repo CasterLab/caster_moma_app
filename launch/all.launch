@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="log_type" default="screen"/>
+
+  <include file="$(find caster_moma_bringup)/launch/caster_moma_j2s6s200_bringup.launch" />
+
+  <include file="$(find caster_moma_j2s6s200_moveit_config)/launch/execute.launch" />
+
+  <include file="$(find caster_moma_app)/launch/marker_detect.launch" />
+
+  <rosparam file="$(find caster_moma_app)/config/caster_moma_app.yaml" command="load" />
+  <node pkg="caster_moma_app" type="pick_task" name="pick_task" output="$(arg log_type)" respawn="true"/>
+  <node pkg="caster_moma_app" type="introduce_server" name="introduce" output="$(arg log_type)" respawn="true"/>
+  <include file="$(find sound_play)/soundplay_node.launch" />
+
+  <include file="$(find caster_navigation)/launch/navigation.launch" />
+
+  <include file="$(find caster_moma_app)/launch/amcl_init_pose.launch" />
+  <!-- <include file="$(find caster_auto_charge)/launch/auto_charge.launch" /> -->
+  <include file="$(find caster_moma_app)/launch/nav_point.launch" />
+
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch">
+    <arg name="port" value="9090"/>
+    <arg name="bson_only_mode" value="true"/>
+  </include>
+
+  <group ns="internal">
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch">
+      <arg name="port" value="9091"/>
+    </include>
+  </group>
+
+  <node name="file_server" pkg="file_server" type="file_server" output="$(arg log_type)"/>
+
+  <node name="web_vide_server_node" pkg="web_video_server" type="web_video_server" output="$(arg log_type)"/>
+
+  <node pkg="caster_moma_app" type="arm_init" name="arm_init" output="$(arg log_type)" />
+
+  <node pkg="rqt_runtime_monitor" type="rqt_runtime_monitor" name="rqt_runtime_monitor" output="$(arg log_type)" />
+</launch>
+

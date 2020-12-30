@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="log_type" default="screen"/>
+  <node pkg="caster_moma_app" type="amcl_initialpose.py" name="amcl_init_pose" output="$(arg log_type)" respawn="true">
+    <!-- <param name="position_x" value="4.79713324226"/>
+    <param name="position_y" value="0.944046656024"/>
+    <param name="orientation_z" value="-0.685952058922"/>
+    <param name="orientation_w" value="0.727646736309"/> -->
+    <param name="position_x" value="4.767"/>
+    <param name="position_y" value="1.246"/>
+    <param name="orientation_z" value="-0.693"/>
+    <param name="orientation_w" value="0.721"/>
+  </node>
+</launch>

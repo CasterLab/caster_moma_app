@@ -3,7 +3,7 @@
   <arg name="log_type" default="screen"/>
 
   <!-- Aruco detect -->
-  <node pkg="aruco_ros" type="marker_publisher" name="object_marker_publisher">
+<!--   <node pkg="aruco_ros" type="marker_publisher" name="object_marker_publisher">
     <param name="image_is_rectified" value="True"/>
     <param name="marker_size"        value="0.064"/>
     <param name="reference_frame"    value="kinect2_ir_optical_frame"/>
@@ -11,17 +11,38 @@
     <remap from="/camera_info" to="/kinect2/sd/camera_info" />
     <remap from="/image" to="/kinect2/sd/image_ir_rect" />
   </node>
+ -->
+<!--   <node pkg="aruco_ros" type="marker_publisher" name="object_marker_publisher">
+    <param name="image_is_rectified" value="True"/>
+    <param name="marker_size"        value="0.064"/>
+    <param name="reference_frame"    value="camera_color_optical_frame"/>
+    <param name="camera_frame"       value="camera_color_optical_frame"/>
+    <remap from="/camera_info" to="/color/camera_info" />
+    <remap from="/image" to="/color/image_raw" />
+  </node>
+ -->
+  <node pkg="aruco_ros" type="marker_publisher" name="object_marker_publisher">
+    <param name="image_is_rectified" value="True"/>
+    <param name="marker_size"        value="0.06"/>
+    <param name="reference_frame"    value="camera_color_optical_frame"/>
+    <param name="camera_frame"       value="camera_color_optical_frame"/>
+    <remap from="/camera_info" to="/color/camera_info" />
+    <remap from="/image" to="/color/image_raw" />
+  </node>
 
   <node pkg="aruco_ros" type="single" name="plane_marker_publisher">
-    <param name="marker_id"          value="99"/>
+    <param name="marker_id"          value="110"/>
     <param name="image_is_rectified" value="True"/>
-    <param name="marker_size"        value="0.143"/>
+    <!-- <param name="marker_size"        value="0.092"/> -->
+    <param name="marker_size"        value="0.15"/>
     <param name="reference_frame"    value="kinect2_ir_optical_frame"/>
     <param name="camera_frame"       value="kinect2_ir_optical_frame"/>
     <param name="marker_frame"       value="plane" />
     <param name="corner_refinement"  value="LINES" />
     <remap from="/camera_info" to="/kinect2/sd/camera_info" />
     <remap from="/image" to="/kinect2/sd/image_ir_rect" />
+    <!-- <remap from="/camera_info" to="/kinect2/qhd/camera_info" /> -->
+    <!-- <remap from="/image" to="/kinect2/qhd/image_color_rect" /> -->
   </node>
 
   <!-- marker detect -->

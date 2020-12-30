@@ -82,11 +82,12 @@ add_service_files(
 #   Action1.action
 #   Action2.action
 # )
-
+add_action_files(DIRECTORY action FILES PickItems.action Introduce.action)
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
   std_msgs
+  actionlib_msgs
 )
 
 ################################################
@@ -151,6 +152,12 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(fake_pick_place_demo src/fake_pick_place_demo.cpp)
 add_executable(marker_detect_node src/marker_detect_node.cpp)
+add_executable(pick_and_place_demo src/pick_and_place_demo.cpp)
+add_executable(pick_task src/pick_task.cpp)
+add_executable(pick_task_client src/pick_task_client.cpp)
+add_executable(arm_init src/arm_init.cpp)
+add_executable(introduce_server src/introduce_server.cpp)
+add_executable(vedio src/vedio.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -162,10 +169,22 @@ add_executable(marker_detect_node src/marker_detect_node.cpp)
 ## same as for the library above
 add_dependencies(fake_pick_place_demo ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(marker_detect_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(pick_and_place_demo ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(pick_task ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(pick_task_client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(arm_init ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(introduce_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(vedio ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(fake_pick_place_demo ${catkin_LIBRARIES})
 target_link_libraries(marker_detect_node ${catkin_LIBRARIES})
+target_link_libraries(pick_and_place_demo ${catkin_LIBRARIES})
+target_link_libraries(pick_task ${catkin_LIBRARIES})
+target_link_libraries(pick_task_client ${catkin_LIBRARIES})
+target_link_libraries(arm_init ${catkin_LIBRARIES})
+target_link_libraries(introduce_server ${catkin_LIBRARIES})
+target_link_libraries(vedio ${catkin_LIBRARIES})
 
 #############
 ## Install ##

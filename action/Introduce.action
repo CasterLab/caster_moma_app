@@ -1,0 +1,10 @@
+# Define the goal
+string places  #
+---
+# Define the result
+int16 finished_step
+---
+# Define a feedback message
+int16 step_index
+string goal_current
+string step_description

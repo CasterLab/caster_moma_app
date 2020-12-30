@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="log_type" default="screen"/>
+
+  <!-- <include file="$(find caster_moma_app)/launch/marker_detect.launch" /> -->
+
+  <rosparam file="$(find caster_moma_app)/config/caster_moma_app.yaml" command="load" />
+  <node pkg="caster_moma_app" type="introduce_server" name="introduce_server" output="$(arg log_type)" />
+</launch>
